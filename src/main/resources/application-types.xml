@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="create-employee" format="json">
+      <types:shape format="weave" example="examples/success-employee create-response.json"><![CDATA[%dw 2.0
+
+type create_employee = {|
+  status: String, 
+  message: String
+|} {"example": "{\\\"status\\\":\\\"200\\\",\\\"message\\\":\\\"sucess\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="update-employee" format="xml">
+      <types:example format="xml" element="response" location="examples/update-employee-response.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#7ca0d8ab-2484-4769-9da6-7d59c2c2c143">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="create-employee"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#2b530f82-58aa-40a0-92ec-5935535580a2">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="update-employee"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
